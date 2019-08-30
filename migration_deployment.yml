@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: migration-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: migration-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        name: migration-app
+        version: v1
+    spec:
+      containers:
+        - name: migration-con
+          image: imtiaz1519/migration_app:v1
+          ports:
+            - containerPort: 5432
+          env:
+            - name: DB_NAME
+              value: "todos"
+            - name: DB_USER
+              value: "myuser"
+            - name: DB_PASS
+              value: "12345"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_HOST
+              value: "postgres-service"

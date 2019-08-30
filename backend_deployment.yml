@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: backend-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        name: backend-app
+        version: v1
+    spec:
+      containers:
+        - name: backend-con
+          image: imtiaz1519/backend_app:v1
+          ports:
+            - containerPort: 3003
+          env:
+            - name: DB_NAME
+              value: "todos"
+            - name: DB_USERNAME
+              value: "myuser"
+            - name: DB_PASSWORD
+              value: "12345"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_HOST
+              value: "postgres-service"
